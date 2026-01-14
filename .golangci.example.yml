@@ -1,0 +1,19 @@
+version: "2"
+
+linters:
+  default: none
+  enable:
+    - punused
+
+  settings:
+    custom:
+      punused:
+        # Path to the compiled plugin (required)
+        path: punused.so
+        # Description of the linter (optional, shows up in `golangci-lint linters`)
+        description: Finds unused exported Go symbols (functions, methods, variables, constants, fields, interfaces)
+        # Original URL of the linter (optional, for documentation purposes)
+        original-url: github.com/bep/punused
+        # Settings are reserved for future use
+        # settings:
+        #   pattern: "**/*.go"

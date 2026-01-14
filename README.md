@@ -51,3 +51,43 @@ internal/lib/testpackages/firstpackage/testlib1.go:4:2 constant OnlyUsedInTestCo
 ```
 
 Note that we currently skip checking test code, but you do warned about unused symbols only used in tests (see example above).
+
+## Use as a golangci-lint Plugin
+
+`punused` can also be used as a [golangci-lint plugin](https://golangci-lint.run/docs/plugins/go-plugins/).
+
+### Build the Plugin
+
+```bash
+go build -buildmode=plugin -o punused.so plugin/punused.go
+```
+
+### Configure golangci-lint
+
+Create or update your `.golangci.yml` file:
+
+```yaml
+version: "2"
+
+linters:
+  default: none
+  enable:
+    - punused
+
+  settings:
+    custom:
+      punused:
+        path: /path/to/punused.so
+        description: Finds unused exported Go symbols
+        original-url: github.com/bep/punused
+```
+
+See [.golangci.example.yml](.golangci.example.yml) for a complete example.
+
+### Run with golangci-lint
+
+```bash
+golangci-lint run
+```
+
+**Note:** Plugin dependencies must match the versions used by your golangci-lint binary. It's recommended to build golangci-lint from source to ensure compatibility. See the [golangci-lint plugin documentation](https://golangci-lint.run/docs/plugins/go-plugins/) for more details.

@@ -11,6 +11,7 @@ import (
 	"sync"
 	"time"
 
+	lsp "github.com/sourcegraph/go-lsp"
 	"golang.org/x/tools/go/analysis"
 )
 
@@ -97,7 +98,7 @@ func run(pass *analysis.Pass) (interface{}, error) {
 		var checkSymbol func(s *Symbol)
 		checkSymbol = func(s *Symbol) {
 			base := s.Name
-			if s.Kind == 6 && strings.Contains(base, ".") { // Method
+			if s.Kind == lsp.SKMethod && strings.Contains(base, ".") {
 				base = s.Name[strings.Index(s.Name, ".")+1:]
 			}
 

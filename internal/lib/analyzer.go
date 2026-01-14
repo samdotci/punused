@@ -1,7 +1,6 @@
 package lib
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"go/token"
@@ -244,16 +243,4 @@ func symbolKindToString(kind interface{}) string {
 	default:
 		return "symbol"
 	}
-}
-
-// RunForPlugin runs the punused analysis and returns results as a string buffer
-// This is used by the plugin to integrate with golangci-lint
-func RunForPlugin(ctx context.Context, workspaceDir string, pattern string) (*bytes.Buffer, error) {
-	var buff bytes.Buffer
-	err := Run(ctx, RunConfig{
-		WorkspaceDir:    workspaceDir,
-		FilenamePattern: pattern,
-		Out:             &buff,
-	})
-	return &buff, err
 }
